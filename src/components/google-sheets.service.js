@@ -176,7 +176,7 @@
 				}
 
 				var postUrl = 'https://script.google.com/a/macros/' + domain + '/s/' + scriptID + '/dev?';
-				postUrl = postUrl + 'sheetId=' + sheetID + '&sheet=' + encodeURIComponent(worksheet || self.worksheets[defaultWorksheet].title) + '&data=' + encodeURIComponent(angular.toJson(dataToSend));
+				postUrl = postUrl + 'sheetId=' + sheetID + '&sheet=' + encodeURIComponent(self.worksheets[worksheet].title || self.worksheets[defaultWorksheet].title) + '&data=' + encodeURIComponent(angular.toJson(dataToSend));
 
 				return $q(function (resolve, reject) {
 
@@ -217,10 +217,6 @@
 						scriptID = res.data.scriptId;
 						domain = res.data.domain;
 						self.setWorksheets();
-
-						self.read().then(function (res) {
-							console.log(res);
-						})
 					});
 				} else {
 					timer = setTimeout(function () {
