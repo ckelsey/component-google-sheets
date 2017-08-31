@@ -11,9 +11,7 @@
 		var self = {
 
 
-
 			worksheets: {},
-
 
 
 			setWorksheets: function () {
@@ -219,6 +217,10 @@
 						scriptID = res.data.scriptId;
 						domain = res.data.domain;
 						self.setWorksheets();
+
+						self.read().then(function (res) {
+							console.log(res);
+						})
 					});
 				} else {
 					timer = setTimeout(function () {

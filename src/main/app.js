@@ -14,17 +14,8 @@
 		$locationProvider.html5Mode(true);
 	});
 
-	demo.controller('AppCtlr', function ($scope, $http, googleSheetsService){
+	demo.controller('AppCtlr', function ($scope, googleSheetsService){
 		var self = this;
-		$scope.googleSheetsService = googleSheetsService;
-
-		// window.gapiReady = function () {
-		// 	gapi.load('client', {
-		// 		callback: function () {
-		// 			googleSheetsService.init();
-		// 		}
-		// 	});
-		// };
 
 		$scope.options = [{
 			name: 'label 1',
@@ -39,25 +30,48 @@
 		};
 
 		this.documentation = {
-			title: 'Name of module',
-			description: null,
+			title: 'google-sheets-component',
+			description: "CRUD interface for Google Sheets",
 
 			"googleSheetsService": {
-				description: null,
+				description: "CRUD interface for Google Sheets",
 				properties: {
-					// "propertyOrMethod": {
-					// 	description: null,
-					// 	arguments: {
-					// 		arg: {
-					// 			type: null,
-					// 			description: null
-					// 		}
-					// 	},
-					// 	returns: {
-					// 		type: null,
-					// 		description: null
-					// 	}
-					// }
+					"worksheets": {
+						description: 'An object containing the id and title of worksheets in the sheet'
+					},
+
+					"init": {
+						description: "Gets and sets configuration data and calls setWorksheets()",
+						returns: {
+							type: 'void'
+						}
+					},
+
+					"setWorksheets": {
+						description: "Gets then sets the worksheets property",
+						returns: {
+							type: 'object',
+							description: 'googleSheetsService.worksheets'
+						}
+					},
+
+					"read": {
+						description: "Gets sheet data and optionally searches rows for supplied query",
+						arguments: {
+							worksheet: {
+								type: 'string',
+								description: 'Optional, the id of the worksheet. Can use "worksheets" property to get the id. Defaults to the first worksheet.'
+							},
+							query: {
+								type: 'object',
+								description: ''
+							}
+						},
+						returns: {
+							type: 'object',
+							description: '{ tite: "The title of the sheet", lastUpdated: "Last updated date", entries: {}}'
+						}
+					}
 				}
 			}
 		};
