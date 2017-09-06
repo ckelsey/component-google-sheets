@@ -37,10 +37,10 @@ var vars = {
 	styles: ['src/style/*.scss'],
 
 	stylesVendor: [
-		'bower_components/fontawesome/css/font-awesome.min.css',
+		// 'bower_components/fontawesome/css/font-awesome.min.css',
 		'bower_components/do-ck/dist/css/do-ck.min.css',
-		'bower_components/ckronos/dist/css/ckronos.min.css',
-		'bower_components/ackolor/dist/css/aCKolor.min.css'
+		// 'bower_components/ckronos/dist/css/ckronos.min.css',
+		// 'bower_components/ackolor/dist/css/aCKolor.min.css'
 	],
 
 	stylesComponents:[
@@ -60,10 +60,10 @@ var vars = {
 		'bower_components/angular-resource/angular-resource.js',
 		'bower_components/angular-sanitize/angular-sanitize.js',
 		'bower_components/angular-route/angular-route.js',
-		'bower_components/angular-loader/angular-loader.js',
-		'bower_components/angular-animate/angular-animate.min.js',
+		// 'bower_components/angular-loader/angular-loader.js',
+		// 'bower_components/angular-animate/angular-animate.min.js',
 		// 'bower_components/ckc-angularjs-utility/dist/utility.min.js',
-		'bower_components/ngstorage/ngStorage.min.js',
+		// 'bower_components/ngstorage/ngStorage.min.js',
 		// 'bower_components/ackolor/dist/js/aCKolor.min.js',
 		// 'bower_components/ckronos/dist/js/ckronos.min.js',
 		// 'bower_components/do-ck/dist/js/do-ck.min.js',
@@ -73,7 +73,7 @@ var vars = {
 
 	scriptsComponents:[
 		'src/components/**/**.js',
-		'bower_components/jwt-client/jwt-client.js'
+		// 'bower_components/jwt-client/jwt-client.js'
 	],
 
 	componentsWatch:[
