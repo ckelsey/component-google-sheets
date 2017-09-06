@@ -228,21 +228,29 @@
 			init: function () {
 				clearTimeout(timer);
 
-				if ($http) {
-					$http({
-						method: 'get',
-						url: 'sheets.config.json'
-					}).then(function (res) {
-						sheetID = res.data.sheetId;
-						scriptID = res.data.scriptId;
-						domain = res.data.domain;
-						self.setWorksheets();
-					});
-				} else {
-					timer = setTimeout(function () {
-						self.init();
-					}, 200);
-				}
+				return $q(function (resolve, reject) {
+					if ($http) {
+						$http({
+							method: 'get',
+							url: 'sheets.config.json'
+						}).then(
+							function (res) {
+								sheetID = res.data.sheetId;
+								scriptID = res.data.scriptId;
+								domain = res.data.domain;
+								self.setWorksheets();
+
+								resolve(self.worksheets);
+							}, function (err) {
+								reject(err);
+							}
+						);
+					} else {
+						timer = setTimeout(function () {
+							self.init();
+						}, 200);
+					}
+				});
 			}
 		};
 
