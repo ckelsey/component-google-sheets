@@ -195,7 +195,8 @@
 				}
 
 				var postUrl = 'https://script.google.com/a/macros/' + domain + '/s/' + scriptID + '/dev?';
-				postUrl = postUrl + 'sheetId=' + sheetID + '&sheet=' + encodeURIComponent(self.worksheets[worksheet].title || self.worksheets[defaultWorksheet].title) + '&data=' + encodeURIComponent(angular.toJson(dataToSend));
+				worksheet = self.worksheets[worksheet] || self.worksheets[defaultWorksheet];
+				postUrl = postUrl + 'sheetId=' + sheetID + '&sheet=' + encodeURIComponent(worksheet.title) + '&data=' + encodeURIComponent(angular.toJson(dataToSend));
 
 				return $q(function (resolve, reject) {
 
