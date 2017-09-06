@@ -5,6 +5,7 @@
   "keywords": [],
   "author": "Chris Kelsey",
   "license": "MIT",
+  "main": "./src/components/google-sheets-component.js",
   "devDependencies": {
     "bower": "^*",
     "browser-sync": "^*",
