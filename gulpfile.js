@@ -54,7 +54,8 @@ var vars = {
 
 	scripts: ['src/main/*.js'],
 
-	scriptsVendor:[
+	scriptsVendor: [
+		'node_modules/systemjs/dist/system.js',
 		'bower_components/angular/angular.min.js',
 		'bower_components/angular-cookies/angular-cookies.js',
 		'bower_components/angular-resource/angular-resource.js',
@@ -90,7 +91,8 @@ var vars = {
 	moveToLib: [],
 
 	moveToJs: [
-		'bower_components/do-ck/dist/js/do-ck.min.js.map'
+		'bower_components/do-ck/dist/js/do-ck.min.js.map',
+		'src/components/*.js'
 	],
 
 	buildFiles: [

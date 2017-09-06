@@ -30,7 +30,7 @@
 		};
 
 		this.documentation = {
-			title: 'google-sheets-component',
+			title: 'googleSheetsComponent',
 			description: "CRUD interface for Google Sheets",
 
 			"googleSheetsService": {
@@ -80,5 +80,5 @@
 	'ngResource',
 	'ngSanitize',
 	'ngRoute',
-	'google-sheets-component'
+	require('googleSheetsComponent')
 ]));
