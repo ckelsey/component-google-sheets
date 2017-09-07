@@ -193,9 +193,11 @@
 					}
 
 					for (var p in dataToSend[e]) {
-						try {
-							dataToSend[e][p] = JSON.stringify(dataToSend[e][p]);
-						} catch (error) {}
+						if ((!!dataToSend[e][p]) && (dataToSend[e][p].constructor === Array || dataToSend[e][p].constructor === Object)) {
+							try {
+								dataToSend[e][p] = JSON.stringify(dataToSend[e][p]);
+							} catch (error) { }
+						}
 					}
 
 					dataToSend[e].confirmationID = (new Date().getTime()) + '_' + hex;
