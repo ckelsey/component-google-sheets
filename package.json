@@ -1,44 +1,20 @@
 {
   "name": "component-google-sheets",
-  "version": "1.0.8",
   "description": "",
-  "keywords": [],
-  "author": "Chris Kelsey",
-  "license": "MIT",
-  "main": "./src/components/google-sheets-component.js",
-  "devDependencies": {
-    "bower": "^*",
-    "browser-sync": "^*",
-    "gulp": "^*",
-    "gulp-angular-embed-templates": "^*",
-    "gulp-autoprefixer": "^*",
-    "gulp-awspublish": "^*",
-    "gulp-clean-css": "^*",
-    "gulp-cloudfront-invalidate-aws-publish": "^*",
-    "gulp-compass": "^*",
-    "gulp-concat": "^*",
-    "gulp-flatmap": "^*",
-    "gulp-jshint": "^*",
-    "gulp-livereload": "^*",
-    "gulp-load-plugins": "^*",
-    "gulp-ng-annotate": "^*",
-    "gulp-notify": "^*",
-    "gulp-plumber": "^*",
-    "gulp-rename": "^*",
-    "gulp-sass": "^*",
-    "gulp-sourcemaps": "^*",
-    "gulp-to-markdown": "^*",
-    "gulp-uglify": "^*",
-    "jshint": "^*",
-    "q": "^*",
-    "run-sequence": "^*",
-    "systemjs": "^0.20.18"
+  "version": "1.0.8",
+  "engines": {
+    "node": ">=6.0.0"
   },
-  "bower": {
-    "angular": "latest",
-    "angular-loader": "latest",
-    "angular-resource": "latest",
-    "angular-route": "latest",
-    "angular-sanitize": "latest"
+  "dependencies": {
+    "angular": "^*",
+    "angular-mocks": "^*",
+    "angular-resource": "^*",
+    "angular-route": "^*",
+    "angular-sanitize": "^*",
+    "angular-loader": "^*"
+  },
+  "devDependencies": {
+    "jasmine-reporters": "2.2.1",
+    "jasmine-spec-reporter": "4.1.0"
   }
 }

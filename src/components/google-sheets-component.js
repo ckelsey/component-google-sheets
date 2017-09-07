@@ -25,7 +25,7 @@
 	var domain = null;
 	var defaultWorksheet = 'od6';
 
-	function googleSheetsService($http, $q, $sce) {
+	function googleSheetsService($http, $q, $sce, $window) {
 
 		var self = {
 
@@ -41,7 +41,7 @@
 						method: 'jsonp',
 						url: $sce.trustAsResourceUrl(url)
 					}).then(function (res) {
-						var parser = new DOMParser(), entries = [];
+						var parser = new $window.DOMParser(), entries = [];
 
 						try {
 							var xmlDoc = parser.parseFromString(res.data, "text/xml");
@@ -88,7 +88,7 @@
 						method: 'jsonp',
 						url: $sce.trustAsResourceUrl(url)
 					}).then(function (res) {
-						var parser = new DOMParser(), entries = [], lastUpdated, title, totalResults;
+						var parser = new $window.DOMParser(), entries = [], lastUpdated, title;
 
 						try {
 							var xmlDoc = parser.parseFromString(res.data, "text/xml");
@@ -266,15 +266,14 @@
 			}
 		};
 
-		self.init();
-
 		return self;
 	}
 
 	googleSheetsService.$inject = [
 		'$http',
 		'$q',
-		'$sce'
+		'$sce',
+		'$window'
 	];
 
 	mod.service('googleSheetsService', googleSheetsService);

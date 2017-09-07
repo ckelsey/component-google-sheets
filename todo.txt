@@ -1,5 +1,0 @@
-- Add update function
-- Add delete function
-- Add test service methods
-- output docks to module with config
-- readme generator

@@ -28,4 +28,3 @@ Read/write to google sheets
       - data - an array of row objects - [{header: value, header: value}, ...]. Headers will be appended to sheet if they don't already exist.
       - Optional worksheet id argument, defaults to the first worksheet.
 
-
