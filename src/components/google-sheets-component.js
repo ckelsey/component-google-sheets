@@ -1,23 +1,30 @@
+'use strict';
+
 (function (root, factory) {
 	'use strict';
+	/* istanbul ignore next */
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
 		define(['angular'], factory);
-	} else if (typeof module !== 'undefined' && typeof module.exports === 'object') {
-		// CommonJS support (for us webpack/browserify/ComponentJS folks)
-		module.exports = factory(require('angular'));
+	} else if (typeof module === 'object' && module.exports) {
+		// Node. Does not work with strict CommonJS, but
+		// only CommonJS-like environments that support module.exports,
+		// like Node.
+		// to support bundler like browserify
+		var angularObj = angular || require('angular');
+		if ((!angularObj || !angularObj.module) && typeof angular != 'undefined') {
+			angularObj = angular;
+		}
+		module.exports = factory(angularObj);
 	} else {
-		// in the case of no module loading system
-		// then don't worry about creating a global
-		// variable like you would in normal UMD.
-		// It's not really helpful... Just call your factory
-		return factory(root.angular);
+		// Browser globals (root is window)
+		factory(root.angular);
 	}
+
 }(this, function (angular) {
 	'use strict';
-	// create your angular module and do stuff
-	var moduleName = 'googleSheetsComponent';
-	var mod = angular.module(moduleName, []);
+
+	var module = angular.module('googleSheetsComponent', []);
 
 	var timer = null;
 	var sheetID = null;
@@ -25,7 +32,8 @@
 	var domain = null;
 	var defaultWorksheet = 'od6';
 
-	function googleSheetsService($http, $q, $sce, $window) {
+
+	module.service('googleSheetsService', ['$http', '$q', '$sce', '$window', function ($http, $q, $sce, $window) {
 
 		var self = {
 
@@ -258,7 +266,7 @@
 							}, function (err) {
 								reject(err);
 							}
-						);
+							);
 					} else {
 						timer = setTimeout(function () {
 							self.init();
@@ -269,16 +277,6 @@
 		};
 
 		return self;
-	}
-
-	googleSheetsService.$inject = [
-		'$http',
-		'$q',
-		'$sce',
-		'$window'
-	];
-
-	mod.service('googleSheetsService', googleSheetsService);
-
-	return moduleName; // the name of your module
+	}]);
+	return module.name
 }));
