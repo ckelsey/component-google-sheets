@@ -191,6 +191,13 @@
 					for (var i = 0; i < angular.toJson(dataToSend[e]).length; i++) {
 						hex += '' + angular.toJson(dataToSend[e]).charCodeAt(i).toString(16);
 					}
+
+					for (var p in dataToSend[e]) {
+						try {
+							dataToSend[e][p] = JSON.stringify(dataToSend[e][p]);
+						} catch (error) {}
+					}
+
 					dataToSend[e].confirmationID = (new Date().getTime()) + '_' + hex;
 				}
 
@@ -238,9 +245,14 @@
 								sheetID = res.data.sheetId;
 								scriptID = res.data.scriptId;
 								domain = res.data.domain;
-								self.setWorksheets();
-
-								resolve(self.worksheets);
+								self.setWorksheets().then(
+									function () {
+										resolve(self.worksheets);
+									},
+									function (err) {
+										reject(err);
+									}
+								);
 							}, function (err) {
 								reject(err);
 							}
