@@ -1,7 +1,7 @@
 {
   "name": "component-google-sheets",
   "description": "",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "engines": {
     "node": ">=6.0.0"
   },
