@@ -242,14 +242,14 @@
 
 
 
-			init: function () {
+			init: function (sheetPath) {
 				clearTimeout(timer);
 
 				return $q(function (resolve, reject) {
 					if ($http) {
 						$http({
 							method: 'get',
-							url: 'sheets.config.json'
+							url: sheetPath || 'sheets.config.json'
 						}).then(
 							function (res) {
 								sheetID = res.data.sheetId;
@@ -269,7 +269,7 @@
 							);
 					} else {
 						timer = setTimeout(function () {
-							self.init();
+							self.init(sheetPath);
 						}, 200);
 					}
 				});
