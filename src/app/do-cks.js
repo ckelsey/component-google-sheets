@@ -24,7 +24,7 @@ angular.module('app').directive('doCks', function($anchorScroll, $location){
 				scope.directives = [];
 				scope.services = [];
 
-				this.anchorScroll = function () {
+				this.anchorScroll = function (id) {
 					var old = $location.hash();
 					$location.hash(id);
 					$anchorScroll();
@@ -36,11 +36,15 @@ angular.module('app').directive('doCks', function($anchorScroll, $location){
 						var html = (directive.meta.preMarkup || '') + directive.meta.markup;
 
 						for (var p in directive.meta.properties.attributes) {
-							html = html.replace(p + '="', p + '="' + directive.meta.properties.attributes[p].value);
+							if (directive.meta.properties.attributes[p]) {
+								html = html.replace(p + '="', p + '="' + directive.meta.properties.attributes[p].value);
+							}
 						}
 
 						for (var s in directive.meta.properties.scope) {
-							html = html.replace(s + '="', s + '="ctlr.documentation[\'' + directive.name + '\'].properties.scope[\'' + s + '\'].value');
+							if (directive.meta.properties.scope[s]) {
+								html = html.replace(s + '="', s + '="ctlr.documentation[\'' + directive.name + '\'].properties.scope[\'' + s + '\'].value');
+							}
 						}
 
 						html = html + (directive.meta.postMarkup || '');
@@ -164,11 +168,7 @@ angular.module('app').directive('doCks', function($anchorScroll, $location){
 						};
 
 						/* TODO: do check up on services */
-						if (data.properties.length) {
-							if (data.meta) {
 
-							}
-						}
 
 						scope.services.push(data);
 					}

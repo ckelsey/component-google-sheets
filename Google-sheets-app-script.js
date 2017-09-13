@@ -38,13 +38,11 @@ function record_data(e) {
 
 		for (var d = 0; d < data.length; d++) { // loop through the array
 			var nextRow = sheet.getLastRow() + 1; // get next row
-			var row = [new Date()]; // first element in the row should always be a timestamp
+			var row = [];
 
 			if (!dontUpdateHeaders) {
 				var headersNeedUpdate = false;
 				var theseHeaders = Object.keys(data[d]);
-				Logger.log(JSON.stringify(theseHeaders));
-				Logger.log(JSON.stringify(headers));
 
 				for (var h = 0; h < theseHeaders.length; h++) {
 					if (headers.indexOf(theseHeaders[h]) === -1) {
@@ -68,9 +66,7 @@ function record_data(e) {
 			sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
 		}
 	}
-	catch (error) {
-		// Logger.log(e);
-	}
+	catch (error) {}
 	finally {
 		return;
 	}

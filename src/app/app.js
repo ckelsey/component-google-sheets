@@ -20,7 +20,7 @@ angular.module('app', [
 		$locationProvider.html5Mode(true);
 	})
 	.controller('AppCtlr', function ($scope, googleSheetsService) {
-		googleSheetsService.init().then(function (res) {
+		googleSheetsService.init().then(function () {
 			console.log(googleSheetsService);
 		});
 

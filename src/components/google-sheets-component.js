@@ -1,18 +1,16 @@
-'use strict';
-
 (function (root, factory) {
 	'use strict';
 	/* istanbul ignore next */
-	if (typeof define === 'function' && define.amd) {
+	if (typeof window.define === 'function' && window.define.amd) {
 		// AMD. Register as an anonymous module.
-		define(['angular'], factory);
+		window.define(['angular'], factory);
 	} else if (typeof module === 'object' && module.exports) {
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like environments that support module.exports,
 		// like Node.
 		// to support bundler like browserify
 		var angularObj = angular || require('angular');
-		if ((!angularObj || !angularObj.module) && typeof angular != 'undefined') {
+		if ((!angularObj || !angularObj.module) && typeof angular !== 'undefined') {
 			angularObj = angular;
 		}
 		module.exports = factory(angularObj);
@@ -137,40 +135,46 @@
 							var searchResults = {};
 
 							for (var r in result.entries) {
-								for (var q in query) {
-									for (var o in query[q]) {
-										switch (o) {
-											case '>':
-												if (result.entries[r][q] && parseFloat(result.entries[r][q]) > query[q][o]) {
-													searchResults[r] = result.entries[r];
-												}
-												break;
+								if (result.entries[r]) {
+									for (var q in query) {
+										if (query[q]) {
+											for (var o in query[q]) {
+												if (query[q][o]) {
+													switch (o) {
+														case '>':
+															if (result.entries[r][q] && parseFloat(result.entries[r][q]) > query[q][o]) {
+																searchResults[r] = result.entries[r];
+															}
+															break;
 
-											case '<':
-												if (result.entries[r][q] && parseFloat(result.entries[r][q]) < query[q][o]) {
-													searchResults[r] = result.entries[r];
-												}
-												break;
-											case '>=':
-												if (result.entries[r][q] && parseFloat(result.entries[r][q]) >= query[q][o]) {
-													searchResults[r] = result.entries[r];
-												}
-												break;
+														case '<':
+															if (result.entries[r][q] && parseFloat(result.entries[r][q]) < query[q][o]) {
+																searchResults[r] = result.entries[r];
+															}
+															break;
+														case '>=':
+															if (result.entries[r][q] && parseFloat(result.entries[r][q]) >= query[q][o]) {
+																searchResults[r] = result.entries[r];
+															}
+															break;
 
-											case '<=':
-												if (result.entries[r][q] && parseFloat(result.entries[r][q]) <= query[q][o]) {
-													searchResults[r] = result.entries[r];
+														case '<=':
+															if (result.entries[r][q] && parseFloat(result.entries[r][q]) <= query[q][o]) {
+																searchResults[r] = result.entries[r];
+															}
+															break;
+														case 'like':
+															if (result.entries[r][q] && result.entries[r][q].indexOf(query[q][o]) > -1) {
+																searchResults[r] = result.entries[r];
+															}
+															break;
+														default:
+															if (result.entries[r][q] && result.entries[r][q] === query[q][o]) {
+																searchResults[r] = result.entries[r];
+															}
+													}
 												}
-												break;
-											case 'like':
-												if (result.entries[r][q] && result.entries[r][q].indexOf(query[q][o]) > -1) {
-													searchResults[r] = result.entries[r];
-												}
-												break;
-											default:
-												if (result.entries[r][q] && result.entries[r][q] === query[q][o]) {
-													searchResults[r] = result.entries[r];
-												}
+											}
 										}
 									}
 								}
@@ -209,6 +213,7 @@
 					}
 
 					dataToSend[e].confirmationID = (new Date().getTime()) + '_' + hex;
+					dataToSend[e].created = new Date();
 				}
 
 				var postUrl = 'https://script.google.com/a/macros/' + domain + '/s/' + scriptID + '/dev?';
