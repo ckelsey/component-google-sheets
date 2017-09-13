@@ -198,6 +198,10 @@
 
 			create: function (dataToSend, worksheet) {
 
+				if (!Array.isArray(dataToSend)) {
+					dataToSend = [dataToSend];
+				}
+
 				for (var e = 0; e < dataToSend.length; e++) {
 					var hex = '';
 					for (var i = 0; i < angular.toJson(dataToSend[e]).length; i++) {

@@ -33,8 +33,23 @@ function record_data(e) {
 		var sheetName = e.parameter.sheet;
 		var doc = SpreadsheetApp.openById(sheetId);
 		var sheet = doc.getSheetByName(sheetName);
-		var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 		var dontUpdateHeaders = e.parameter.dontUpdateHeaders;
+		var headers;
+
+		if (!Array.isArray(data)) {
+			data = [data];
+		}
+
+		try {
+			headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+		} catch (error) {
+			headers = Object.keys(data[0]);
+			sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+			headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+		}
+
+		Logger.log(JSON.stringify(headers));
+		Logger.log(JSON.stringify(data));
 
 		for (var d = 0; d < data.length; d++) { // loop through the array
 			var nextRow = sheet.getLastRow() + 1; // get next row
@@ -57,7 +72,7 @@ function record_data(e) {
 			}
 
 			// loop through the header columns
-			for (var i = 1; i < headers.length; i++) { // start at 1 to avoid Timestamp column
+			for (var i = 0; i < headers.length; i++) {
 				if (headers[i].length > 0) {
 					row.push(data[d][headers[i]]); // add data to row
 				}
@@ -66,7 +81,9 @@ function record_data(e) {
 			sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
 		}
 	}
-	catch (error) {}
+	catch (error) {
+		Logger.log(error);
+	}
 	finally {
 		return;
 	}
