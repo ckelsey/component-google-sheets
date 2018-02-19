@@ -55,6 +55,11 @@ function record_data(e) {
 			var nextRow = sheet.getLastRow() + 1; // get next row
 			var row = [];
 
+			if(data[d].hasOwnProperty("$index")){
+				nextRow = data[d]["$index"]
+				delete data[d]["$index"]
+			}
+
 			if (!dontUpdateHeaders) {
 				var headersNeedUpdate = false;
 				var theseHeaders = Object.keys(data[d]);

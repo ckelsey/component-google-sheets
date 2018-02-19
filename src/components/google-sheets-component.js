@@ -35,7 +35,6 @@
 
 		var self = {
 
-
 			worksheets: {},
 
 
@@ -227,15 +226,84 @@
 				return $q(function (resolve, reject) {
 
 					function getNewData() {
-						self.read(worksheet).then(function (res) {
+						self.read(worksheet.id).then(function (res) {
+							var addedRows = []
 
 							for (var r in res.entries) {
-								if (res.entries[r].confirmationid === dataToSend[0].confirmationID) {
-									return resolve(res);
-								}
+								dataToSend.forEach(function (sentData, index) {
+									if (res.entries[r].confirmationid === sentData.confirmationID) {
+										addedRows.push({ index: parseInt(r) + 2, row: res.entries[r] })
+									}
+								})
 							}
 
-							return reject(res);
+							res.addedRows = addedRows
+
+							if (addedRows.length !== dataToSend.length) {
+								return reject(res);
+							}
+
+							return resolve(res)
+						});
+					}
+
+					$http({
+						method: 'jsonp',
+						url: $sce.trustAsResourceUrl(postUrl),
+					})
+						.then(getNewData)
+						// GOOGLE will always fail this
+						.catch(getNewData);
+				});
+			},
+
+
+
+
+			update: function (dataToSend, indice, worksheet) {
+				var postUrl = 'https://script.google.com/a/macros/' + domain + '/s/' + scriptID + '/dev?';
+				worksheet = self.worksheets[worksheet] || self.worksheets[defaultWorksheet];
+
+				if (!Array.isArray(dataToSend)) {
+					dataToSend = [dataToSend];
+				}
+
+				if (!Array.isArray(indice)) {
+					indice = [indice];
+				}
+
+				dataToSend.map(function(data, index){
+					data["$index"] = indice[index]
+					delete data.id
+					delete data.google_url
+					data.confirmationID = data.confirmationid
+					delete data.confirmationid
+					return data
+				})
+
+				postUrl = postUrl + 'sheetId=' + sheetID + '&sheet=' + encodeURIComponent(worksheet.title) + '&data=' + encodeURIComponent(angular.toJson(dataToSend));
+
+				return $q(function (resolve, reject) {
+
+					function getNewData() {
+						self.read(worksheet.id).then(function (res) {
+							// var addedRows = []
+
+							// for (var r in res.entries) {
+							// 	dataToSend.forEach(function (sentData, index) {
+							// 		if (res.entries[r].confirmationid === sentData.confirmationID) {
+							// 			addedRows.push({ index: index, row: res.entries[r] })
+							// 		}
+							// 	})
+							// }
+
+							// res.addedRows = addedRows
+
+							// if (addedRows.length !== dataToSend.length) {
+							// 	return reject(res);
+							// }
+
+							return resolve(res)
 						});
 					}
 
@@ -275,7 +343,7 @@
 							}, function (err) {
 								reject(err);
 							}
-							);
+						);
 					} else {
 						timer = setTimeout(function () {
 							self.init(sheetPath);

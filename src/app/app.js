@@ -21,7 +21,19 @@ angular.module('app', [
 	})
 	.controller('AppCtlr', function ($scope, googleSheetsService) {
 		googleSheetsService.init().then(function () {
-			console.log(googleSheetsService);
+
+			// googleSheetsService.read().then(function(res){
+
+			// 	googleSheetsService.create({val1:"one", val2:"two"}).then(function(res){
+
+			// 		var newData = res.addedRows[0].row
+			// 		newData.val1 = "NEW data"
+
+			// 		googleSheetsService.update(newData, res.addedRows[0].index).then(function(res){
+			// 			console.log(res)
+			// 		})
+			// 	})
+			// })
 		});
 
 
